@@ -3,7 +3,7 @@ class Piwik extends Plugin {
 	public function info()
 	{
 		return array(
-			'url' => 'http://',
+			'url' => 'http://trac.habariproject.org/habari-extras/browser/plugins/piwik',
 			'name' => 'Piwik',
 			'description'   => 'Automatically adds Piwik tracking code to the theme footer.',
 			'license' => 'Apache License 2.0',
