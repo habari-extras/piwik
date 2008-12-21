@@ -1,6 +1,6 @@
 Piwik is an Open Source Web analytics package.
 
-Piwik is self-hosted software. You need to install and configure Piwiki separately. 
+Piwik is self-hosted software. You need to install and configure Piwik separately. 
 Piwik needs PHP and a MySQL database to store data on site visits.
 
 For more details, see 
