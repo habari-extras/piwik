@@ -81,8 +81,6 @@ class Piwik extends Plugin {
 		$sitenum = Options::get( $class . '__sitenum');
 		$trackloggedin = Options::get( $class . '__trackloggedin');
 
-		echo $trackloggedin;
-
 		if ( URL::get_matched_rule()->entire_match == 'user/login') {
 			// Login page; don't dipslay
 			return;
@@ -94,7 +92,6 @@ class Piwik extends Plugin {
 			}
 		}
 		echo <<<EOD
-echo $trackloggedin
 <!-- Piwik -->
 <a href="http://piwik.org" title="Web analytics" onclick="window.open(this.href);return(false);">
 <script type="text/javascript">
