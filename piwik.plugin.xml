@@ -1,0 +1,10 @@
+<plugin>
+	<url>http://trac.habariproject.org/habari-extras/browser/plugins/piwik</url>
+	<name>Piwik</name>
+	<description>Automatically adds Piwik tracking code to the theme footer.</description>
+	<license>Apache License 2.0</license>
+	<author>Andy C</author>
+	<authorurl>http://nbrightside.com/habari/</authorurl>
+	<version>0.1</version>
+</plugin>
+
