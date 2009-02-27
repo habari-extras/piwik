@@ -115,6 +115,7 @@ Then activate and configure the plugin from the dashboard (Admin-Plugins).
 		}
 		echo <<<EOD
 <!-- Piwik -->
+<div>
 <a href="http://piwik.org" title="Web analytics" onclick="window.open(this.href);return(false);">
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "${ssl_siteurl}" : "${siteurl}" );
@@ -126,6 +127,7 @@ piwik_url = pkBaseURL + "piwik.php";
 piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
 <object><noscript><p>Web analytics <img src="${siteurl}/piwik.php?idsite=${sitenum}" style="border:0" alt=""/></p></noscript></object></a>
+</div>
 <!-- End Piwik Tag -->
 EOD;
 	}
