@@ -126,7 +126,7 @@ piwik_idsite = "${sitenum}";
 piwik_url = pkBaseURL + "piwik.php";
 piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
-<object><noscript><p>Web analytics <img src="${siteurl}/piwik.php?idsite=${sitenum}" style="border:0" alt=""/></p></noscript></object></a>
+<object><noscript><p>Web analytics <img src="${siteurl}/piwik.php?idsite=${sitenum}" style="border:0" alt=""></p></noscript></object></a>
 </div>
 <!-- End Piwik Tag -->
 EOD;
