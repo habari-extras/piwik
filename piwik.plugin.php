@@ -29,7 +29,7 @@ Habari installation.
 Then activate and configure the plugin from the dashboard (Admin-Plugins).
 <p>The configuration options are:
 <ul>
-<li>Pwiki site URL: This is the full URL of the Piwik site (e.g. \'http://www.example.com/piwik\') - the trailing slash \'/\' is required.</li>
+<li>Pwiki site URL: This is the full URL of the Piwik site (e.g. \'http://www.example.com/piwik/\') - the trailing slash \'/\' is required.</li>
 <li>Piwik site number: Piwik can track multiple Web sites. The site number is displayed in the Piwik-Settings administration screen under the \'Site\' tab in the \'ID\' field.</li>
 <li>Tracked logged-in users: Visits by logged in users can optionally be ignored.</li>
 </ul>';
@@ -126,7 +126,7 @@ piwik_idsite = "${sitenum}";
 piwik_url = pkBaseURL + "piwik.php";
 piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
-<object><noscript><p>Web analytics <img src="${siteurl}/piwik.php?idsite=${sitenum}" style="border:0" alt=""></p></noscript></object></a>
+<object><noscript><p>Web analytics <img src="${siteurl}piwik.php?idsite=${sitenum}" style="border:0" alt=""></p></noscript></object></a>
 </div>
 <!-- End Piwik Tag -->
 EOD;
