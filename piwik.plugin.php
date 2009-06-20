@@ -9,7 +9,7 @@ class Piwik extends Plugin {
 			'license' => 'Apache License 2.0',
 			'author' => 'Andy C',
 			'authorurl' => 'http://nbrightside.com/habari/',
-			'version' => '0.1'
+			'version' => '0.2'
 		);
 	}
 
@@ -29,7 +29,7 @@ Habari installation.
 Then activate and configure the plugin from the dashboard (Admin-Plugins).
 <p>The configuration options are:
 <ul>
-<li>Pwiki site URL: This is the full URL of the Piwik site (e.g. \'http://www.example.com/piwik/\') - the trailing slash \'/\' is required.</li>
+<li>Pwiki site URL: This is the full URL of the Piwik site (e.g. \'http://www.example.com/piwik/\').</li>
 <li>Piwik site number: Piwik can track multiple Web sites. The site number is displayed in the Piwik-Settings administration screen under the \'Site\' tab in the \'ID\' field.</li>
 <li>Tracked logged-in users: Visits by logged in users can optionally be ignored.</li>
 </ul>';
@@ -99,6 +99,8 @@ Then activate and configure the plugin from the dashboard (Admin-Plugins).
 	{
 		$class= strtolower( get_class( $this ) );
 		$siteurl = Options::get( $class . '__siteurl');
+        	if (strrpos($siteurl,'/') === false) 
+ 			$siteurl .= '/'; 
 		$ssl_siteurl = str_replace("http://", "https://", $siteurl);
 		$sitenum = Options::get( $class . '__sitenum');
 		$trackloggedin = Options::get( $class . '__trackloggedin');
@@ -125,6 +127,11 @@ piwik_action_name = '';
 piwik_idsite = "${sitenum}";
 piwik_url = pkBaseURL + "piwik.php";
 piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+try { 
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", ${sitenum}); 
+piwikTracker.trackPageView(); 
+piwikTracker.enableLinkTracking(); 
+} catch( err ) {} 
 </script>
 <object><noscript><p>Web analytics <img src="${siteurl}piwik.php?idsite=${sitenum}" style="border:0" alt=""></p></noscript></object></a>
 </div>
