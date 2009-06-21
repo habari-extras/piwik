@@ -99,7 +99,7 @@ Then activate and configure the plugin from the dashboard (Admin-Plugins).
 	{
 		$class= strtolower( get_class( $this ) );
 		$siteurl = Options::get( $class . '__siteurl');
-        	if (strrpos($siteurl,'/') === false) 
+        	if (strrpos($siteurl,'/') !== 0) 
  			$siteurl .= '/'; 
 		$ssl_siteurl = str_replace("http://", "https://", $siteurl);
 		$sitenum = Options::get( $class . '__sitenum');
@@ -117,7 +117,6 @@ Then activate and configure the plugin from the dashboard (Admin-Plugins).
 		}
 		echo <<<EOD
 <!-- Piwik -->
-<div>
 <a href="http://piwik.org" title="Web analytics" onclick="window.open(this.href);return(false);">
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "${ssl_siteurl}" : "${siteurl}" );
@@ -133,8 +132,6 @@ piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking(); 
 } catch( err ) {} 
 </script>
-<object><noscript><p>Web analytics <img src="${siteurl}piwik.php?idsite=${sitenum}" style="border:0" alt=""></p></noscript></object></a>
-</div>
 <!-- End Piwik Tag -->
 EOD;
 	}
