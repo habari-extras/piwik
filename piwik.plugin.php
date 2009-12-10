@@ -1,8 +1,6 @@
 <?php
 class Piwik extends Plugin
 {
-
-
 	public function filter_plugin_config( $actions, $plugin_id )
 	{
 		if ( $this->plugin_id() == $plugin_id ) {
@@ -13,13 +11,13 @@ class Piwik extends Plugin
 
 	public function action_plugin_ui( $plugin_id, $action )
 	{
-		if ( $this->plugin_id() == $plugin_id && $action == _t('Configure')){
+		if ( $this->plugin_id() == $plugin_id && $action == _t('Configure') ){
 			$form = new FormUI('piwik');
-			$form->append('text', 'siteurl', 'option:piwik__siteurl', _t('Piwik site URL'));
-			$form->append('text', 'sitenum', 'option:piwik__sitenum', _t('Piwik site number'));
-			$form->append('checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t( 'Track logged-in users', 'piwik' ));
-			$form->append('submit', 'save', 'Save');
-			$form->on_success( array( $this, 'save_config' ) );
+			$form->append( 'text', 'siteurl', 'option:piwik__siteurl', _t('Piwik site URL', 'piwik') );
+			$form->append( 'text', 'sitenum', 'option:piwik__sitenum', _t('Piwik site number', 'piwik') );
+			$form->append( 'checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t( 'Track logged-in users', 'piwik' ) );
+			$form->append( 'submit', 'save', 'Save' );
+			$form->on_success( array($this, 'save_config') );
 			$form->out();
 		}
 	}
@@ -30,35 +28,25 @@ class Piwik extends Plugin
 	 * @param FormUI $form The configuration form being saved
 	 * @return true
 	 */
-	public function save_config( $form )
+	public function save_config( FormUI $form )
 	{
+		Session::notice( _t('Piwik plugin configuration saved', 'piwik') );
 		$form->save();
-		Session::notice('Piwik plugin configuration saved');
-		return false;
 	}
 
-	public function action_plugin_deactivation( $file )
+	public function action_plugin_deactivation()
 	{
 		Options::delete('piwik__siteurl');
 		Options::delete('piwik__sitenum');
 		Options::delete('piwik__trackloggedin');
-		Modules::remove_by_name( 'Piwik' );
 	}
 
-	/**
-	 * Add update beacon support
-	 **/
-	public function action_update_check()
-	{
-	 	Update::add( 'Piwik', 'xxx', $this->info->version );
-	}
-
-	public function action_plugin_activation( $file )
+	public function action_plugin_activation()
 	{
 		Options::set('piwik__trackloggedin', false);
 	}
 
-	public function theme_footer( $theme )
+	public function theme_footer( Theme $theme )
 	{
 		// trailing slash url
 		$siteurl = Options::get('piwik__siteurl');
