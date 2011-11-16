@@ -3,9 +3,8 @@
 	<name>Piwik</name>
 	<version>0.3</version>
 	<url>http://trac.habariproject.org/habari-extras/browser/plugins/piwik</url>
-	<author>Andy C</author>
-	<authorurl>http://nbrightside.com/habari/</authorurl>
-	<license>Apache License 2.0</license>
+	<author url="http://nbrightside.com/habari/">Andy C</author>
+	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Software License 2.0</license>
 	<description><![CDATA[Automatically adds the Piwik tracking code to the theme footer.]]></description>
 	<copyright>2009</copyright>
 	
