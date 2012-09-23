@@ -78,7 +78,7 @@ piwikTracker.enableLinkTracking();
 }
 catch( err ) {
 }
-</script>
+</script><noscript><p><img src="{$siteurl}piwik.php?idsite={$sitenum}" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 EOD;
 	}
