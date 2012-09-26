@@ -64,6 +64,12 @@ class Piwik extends Plugin
 		if ( User::identify()->loggedin && !Options::get('piwik__trackloggedin') ) {
 			return;
 		}
+        $title = 'piwikTracker.setDocumentTitle(document.title);';
+        if ( $theme->request->display_404 == true ) {
+            $title = <<<LMNO
+piwikTracker.setDocumentTitle('404/URL = '+String(document.location.pathname+document.location.search).replace(/\//g,"%2f") + '/From = ' + String(document.referrer).replace(/\//g,"%2f"));
+LMNO;
+        }
 		echo <<<EOD
 <!-- Piwik -->
 <script type="text/javascript">
@@ -72,7 +78,7 @@ document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/ja
 </script><script type="text/javascript">
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {$sitenum});
-piwikTracker.setDocumentTitle(document.title);
+{$title}
 piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking();
 }
