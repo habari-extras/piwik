@@ -70,6 +70,12 @@ class Piwik extends Plugin
 piwikTracker.setDocumentTitle('404/URL = '+String(document.location.pathname+document.location.search).replace(/\//g,"%2f") + '/From = ' + String(document.referrer).replace(/\//g,"%2f"));
 LMNO;
         }
+        $tags = '';
+        if ( count($theme->posts) == 1 && $theme->posts instanceof Post ) {
+            foreach($theme->posts->tags as $i => $tag){
+                $tags .= "piwikTracker.setCustomVariable ({$i}, 'Tag', '{$tag->term_display}', 'page');";
+            }
+        }
 		echo <<<EOD
 <!-- Piwik -->
 <script type="text/javascript">
@@ -79,6 +85,7 @@ document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/ja
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {$sitenum});
 {$title}
+{$tags}
 piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking();
 }
