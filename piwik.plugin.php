@@ -79,7 +79,7 @@ class Piwik extends Plugin
 	
 	public function action_block_content_piwik_countries($block, $theme)
 	{
-		$block->url = $this->get_block_url("&method=ImageGraph.get&apiModule=UserCountry&apiAction=getCountry&graphType=verticalBar&period=month&date=today");
+		$block->url = $this->get_block_url("&method=ImageGraph.get&apiModule=UserCountry&apiAction=getCountry&graphType=horizontalBar&period=month&date=today");
 	}
 
 	private function get_block_url($query)
