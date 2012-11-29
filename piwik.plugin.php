@@ -16,10 +16,6 @@ class Piwik extends Plugin
 				'piwik_page_titles' => _t( 'Piwik Page Titles (Today)', 'piwik'),
 				'piwik_os' => _t( 'Piwik OS (Today)', 'piwik'),
 			);
-
-		foreach( $this->dashboard_modules as $id => $name ) {
-			$this->add_template( 'dashboard.block.' . $id, __DIR__ . '/dashboard.block.piwik.php' );
-		}
 	}
 
 	/**
@@ -76,6 +72,7 @@ class Piwik extends Plugin
 	{
 		foreach( $this->dashboard_modules as $id => $name ) {
 			$block_list[$id] = $name;
+			$this->add_template( 'dashboard.block.' . $id, __DIR__ . '/dashboard.block.piwik.php' );
 		}
 		return $block_list;
 	}
