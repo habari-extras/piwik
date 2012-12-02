@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-01 19:55-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: piwik.plugin.php:13
+msgid "Piwik Visitors"
+msgstr ""
+
+#: piwik.plugin.php:14
+msgid "Piwik Browsers"
+msgstr ""
+
+#: piwik.plugin.php:15
+msgid "Piwik Countries"
+msgstr ""
+
+#: piwik.plugin.php:16
+msgid "Piwik Page Titles"
+msgstr ""
+
+#: piwik.plugin.php:17
+msgid "Piwik OS"
+msgstr ""
+
+#: piwik.plugin.php:47
+msgid "Piwik site URL"
+msgstr ""
+
+#: piwik.plugin.php:48
+msgid "Piwik site number"
+msgstr ""
+
+#: piwik.plugin.php:49
+msgid "Piwik Auth Token"
+msgstr ""
+
+#: piwik.plugin.php:50
+msgid "Track logged-in users"
+msgstr ""
+
+#: piwik.plugin.php:51 piwik.plugin.php:217
+msgid "Save"
+msgstr ""
+
+#: piwik.plugin.php:62
+msgid "Piwik plugin configuration saved"
+msgstr ""
+
+#: piwik.plugin.php:205
+msgid "day"
+msgstr ""
+
+#: piwik.plugin.php:206
+msgid "week"
+msgstr ""
+
+#: piwik.plugin.php:207
+msgid "month"
+msgstr ""
+
+#: piwik.plugin.php:208
+msgid "year"
+msgstr ""
+
+#: piwik.plugin.php:211
+msgid "today"
+msgstr ""
+
+#: piwik.plugin.php:212
+msgid "yesterday"
+msgstr ""
+
+#: piwik.plugin.php:213
+msgid "previous 30 days"
+msgstr ""
+
+#: piwik.plugin.php:215
+msgid "Period"
+msgstr ""
+
+#: piwik.plugin.php:216
+msgid "Date"
+msgstr ""
