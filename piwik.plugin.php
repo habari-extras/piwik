@@ -10,12 +10,13 @@ class Piwik extends Plugin
 	public function action_init()
 	{
 		$this->dashboard_modules = array(
-				'piwik_visitors' => _t( 'Piwik Visitors', 'piwik'),
-				'piwik_browsers' => _t( 'Piwik Browsers', 'piwik'),
-				'piwik_countries' => _t( 'Piwik Countries', 'piwik'),
-				'piwik_page_titles' => _t( 'Piwik Page Titles', 'piwik'),
-				'piwik_os' => _t( 'Piwik OS', 'piwik'),
+				'piwik_visitors' => _t('Piwik Visitors', 'piwik'),
+				'piwik_browsers' => _t('Piwik Browsers', 'piwik'),
+				'piwik_countries' => _t('Piwik Countries', 'piwik'),
+				'piwik_page_titles' => _t('Piwik Page Titles', 'piwik'),
+				'piwik_os' => _t('Piwik OS', 'piwik'),
 			);
+		$this->load_text_domain('piwik');
 	}
 
 	/**
