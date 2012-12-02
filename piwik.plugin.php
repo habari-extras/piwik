@@ -10,11 +10,11 @@ class Piwik extends Plugin
 	public function action_init()
 	{
 		$this->dashboard_modules = array(
-				'piwik_visitors' => _t( 'Piwik Visitors (30 Days)', 'piwik'),
-				'piwik_browsers' => _t( 'Piwik Browsers (Today)', 'piwik'),
-				'piwik_countries' => _t( 'Piwik Countries (Today)', 'piwik'),
-				'piwik_page_titles' => _t( 'Piwik Page Titles (Today)', 'piwik'),
-				'piwik_os' => _t( 'Piwik OS (Today)', 'piwik'),
+				'piwik_visitors' => _t( 'Piwik Visitors', 'piwik'),
+				'piwik_browsers' => _t( 'Piwik Browsers', 'piwik'),
+				'piwik_countries' => _t( 'Piwik Countries', 'piwik'),
+				'piwik_page_titles' => _t( 'Piwik Page Titles', 'piwik'),
+				'piwik_os' => _t( 'Piwik OS', 'piwik'),
 			);
 	}
 
@@ -47,7 +47,7 @@ class Piwik extends Plugin
 			$form->append( 'text', 'siteurl', 'option:piwik__siteurl', _t('Piwik site URL', 'piwik') );
 			$form->append( 'text', 'sitenum', 'option:piwik__sitenum', _t('Piwik site number', 'piwik') );
 			$form->append( 'text', 'auth_token', 'option:piwik__auth_token', _t('Piwik Auth Token', 'piwik') );
-			$form->append( 'checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t( 'Track logged-in users', 'piwik' ) );
+			$form->append( 'checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t('Track logged-in users', 'piwik') );
 			$form->append( 'submit', 'save', _t('Save', 'piwik') );
 			$form->on_success( array($this, 'save_config') );
 			return $form->get();
@@ -79,43 +79,142 @@ class Piwik extends Plugin
 
 	/**
 	 * Set the URL for Piwik graph to display Visitors
-	 * @todo make time periods configurable per block
+	 * @todo make all these functions into via Plugins::register()
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
 	 */
 	public function action_block_content_piwik_visitors( Block $block, Theme $theme )
 	{
-		$block->url = $this->get_block_url('ImageGraph.get', 'VisitsSummary', 'get', 'evolution', 'day', 'previous30');
+		$date = $block->date ? $block->date : 'previous30';
+		$period = $block->period ? $block->period : 'day';
+		$block->url = $this->get_block_url('ImageGraph.get', 'VisitsSummary', 'get', 'evolution', $period, $date);
+		$block->has_options = true;
+	}
+
+	/**
+	 * Produce a form for the editing of the time period for reporting
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
+	 */
+	public function action_block_form_piwik_visitors( FormUI $form, Block $block )
+	{
+		$this->add_form_options( $form, $block );
 	}
 
 	/**
 	 * Set the URL for Piwik graph to display Browsers
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
 	 */
 	public function action_block_content_piwik_browsers( Block $block, Theme $theme )
 	{
-		$block->url = $this->get_block_url('ImageGraph.get', 'UserSettings', 'getBrowser', 'horizontalBar', 'month', 'today');
+		$date = $block->date ? $block->date : 'today';
+		$period = $block->period ? $block->period : 'month';
+		$block->url = $this->get_block_url('ImageGraph.get', 'UserSettings', 'getBrowser', 'horizontalBar', $period, $date);
+		$block->has_options = true;
+	}
+
+	/**
+	 * Produce a form for the editing of the time period for reporting
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
+	 */
+	public function action_block_form_piwik_browsers( FormUI $form, Block $block )
+	{
+		$this->add_form_options( $form, $block );
 	}
 
 	/**
 	 * Set the URL for Piwik graph to display Countries
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
 	 */
 	public function action_block_content_piwik_countries( Block $block, Theme $theme )
 	{
-		$block->url = $this->get_block_url('ImageGraph.get', 'UserCountry', 'getCountry', 'horizontalBar', 'month', 'today');
+		$date = $block->date ? $block->date : 'today';
+		$period = $block->period ? $block->period : 'month';
+		$block->url = $this->get_block_url('ImageGraph.get', 'UserCountry', 'getCountry', 'horizontalBar', $period, $date);
+		$block->has_options = true;
+	}
+
+	/**
+	 * Produce a form for the editing of the time period for reporting
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
+	 */
+	public function action_block_form_piwik_countries( FormUI $form, Block $block )
+	{
+		$this->add_form_options( $form, $block );
 	}
 
 	/**
 	 * Set the URL for Piwik graph to display Operating Systems
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
 	 */
 	public function action_block_content_piwik_os( Block $block, Theme $theme )
 	{
-		$block->url = $this->get_block_url('ImageGraph.get', 'UserSettings', 'getOS', 'horizontalBar', 'month', 'today');
+		$date = $block->date ? $block->date : 'today';
+		$period = $block->period ? $block->period : 'month';
+		$block->url = $this->get_block_url('ImageGraph.get', 'UserSettings', 'getOS', 'horizontalBar', $period, $date);
+		$block->has_options = true;
+	}
+
+	/**
+	 * Produce a form for the editing of the time period for reporting
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
+	 */
+	public function action_block_form_piwik_os( FormUI $form, Block $block )
+	{
+		$this->add_form_options( $form, $block );
 	}
 
 	/**
 	 * Set the URL for Piwik graph to display Page Titles
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
 	 */
 	public function action_block_content_piwik_page_titles( Block $block, Theme $theme )
 	{
-		$block->url = $this->get_block_url('ImageGraph.get', 'Actions', 'getPageTitles', 'horizontalBar', 'month', 'today');
+		$date = $block->date ? $block->date : 'today';
+		$period = $block->period ? $block->period : 'month';
+		$block->url = $this->get_block_url('ImageGraph.get', 'Actions', 'getPageTitles', 'horizontalBar', $period, $date);
+		$block->has_options = true;
+	}
+
+	/**
+	 * Produce a form for the editing of the time period for reporting
+	 * @param FormUI $form The form to allow editing of this block
+	 * @param Block $block The block object to edit
+	 */
+	public function action_block_form_piwik_page_titles( FormUI $form, Block $block )
+	{
+		$this->add_form_options( $form, $block );
+	}
+
+	/**
+	 * Add custom options for period and date to the form.
+	 *
+	 * @param FormUI $form The formui form.
+	 * @param Block $blovk The dashboard block.
+	 */
+	private function add_form_options( FormUI $form, Block $block )
+	{
+		$period_options = array(
+			'day' => _t('day', 'piwik'),
+			'week' => _t('week', 'piwik'),
+			'month' => _t('month', 'piwik'),
+			'year' => _t('year', 'piwik')
+			);
+		$date_options = array(
+			'today' => _t('today', 'piwik'),
+			'yesterday' => _t('yesterday', 'piwik'),
+			'previous30' => _t('previous 30 days', 'piwik'),
+			);
+		$form->append( 'select', 'period', $block, _t('Period', 'piwik'), $period_options );
+		$form->append( 'select', 'date', $block, _t('Date', 'piwik'), $date_options );
+		$form->append( 'submit', 'submit', _t('Save', 'piwik') );
 	}
 
 	/**
@@ -163,16 +262,21 @@ class Piwik extends Plugin
 			// Login page; don't dipslay
 			return;
 		}
+
 		// don't track loggedin user
 		if ( User::identify()->loggedin && !Options::get('piwik__trackloggedin') ) {
 			return;
 		}
+
+		// set title and track 404's'
 		$title = 'piwikTracker.setDocumentTitle(document.title);';
 		if ( $theme->request->display_404 == true ) {
-			$title = <<<LMNO
+			$title = <<<KITTENS
 piwikTracker.setDocumentTitle('404/URL = '+String(document.location.pathname+document.location.search).replace(/\//g,"%2f") + '/From = ' + String(document.referrer).replace(/\//g,"%2f"));
-LMNO;
+KITTENS;
 		}
+
+		// track tags for individual posts
 		$tags = '';
 		if ( count($theme->posts) == 1 && $theme->posts instanceof Post ) {
 			foreach($theme->posts->tags as $i => $tag){
@@ -180,7 +284,8 @@ LMNO;
 				$tags .= "piwikTracker.setCustomVariable ({$n}, 'Tag', '{$tag->term_display}', 'page');";
 			}
 		}
-		echo <<<EOD
+
+		echo <<<PUPPIES
 <!-- Piwik -->
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "${ssl_siteurl}" : "{$siteurl}");
@@ -197,7 +302,7 @@ catch( err ) {
 }
 </script><noscript><p><img src="{$siteurl}piwik.php?idsite={$sitenum}" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
-EOD;
+PUPPIES;
 	}
 
 }
