@@ -44,14 +44,15 @@ class Piwik extends Plugin
 	 */
 	public function configure()
 	{
-			$form = new FormUI('piwik');
-			$form->append( 'text', 'siteurl', 'option:piwik__siteurl', _t('Piwik site URL', 'piwik') );
-			$form->append( 'text', 'sitenum', 'option:piwik__sitenum', _t('Piwik site number', 'piwik') );
-			$form->append( 'text', 'auth_token', 'option:piwik__auth_token', _t('Piwik Auth Token', 'piwik') );
-			$form->append( 'checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t('Track logged-in users', 'piwik') );
-			$form->append( 'submit', 'save', _t('Save', 'piwik') );
-			$form->on_success( array($this, 'save_config') );
-			return $form->get();
+		$form = new FormUI('piwik');
+		$form->append( 'text', 'siteurl', 'option:piwik__siteurl', _t('Piwik site URL', 'piwik') );
+		$form->append( 'text', 'sitenum', 'option:piwik__sitenum', _t('Piwik site number', 'piwik') );
+		$form->append( 'text', 'auth_token', 'option:piwik__auth_token', _t('Piwik Auth Token', 'piwik') );
+		$form->append( 'checkbox', 'trackloggedin', 'option:piwik__trackloggedin', _t('Track logged-in users', 'piwik') );
+		$form->append( 'checkbox', 'use_clickheat', 'option:piwik__use_clickheat', _t('Include PiWik Click Heat Plugin JS', 'piwik') );
+		$form->append( 'submit', 'save', _t('Save', 'piwik') );
+		$form->on_success( array($this, 'save_config') );
+		return $form->get();
 	}
 
 	/**
@@ -286,7 +287,30 @@ KITTENS;
 			}
 		}
 
-		echo <<<PUPPIES
+		// output the javascript
+		echo $this->get_piwik_script($ssl_siteurl, $siteurl, $sitenum, $title, $tags);
+
+		if ( Options::get('piwik__use_clickheat', false) ) {
+			// Click Heat integration
+			// @todo use groups of entry, page, home, archive, etc. instead of title
+			// @todo implement select option to let user choose group, page title, or URL for click tracking
+			// @todo implement click quota option
+			// $group = $this->get_click_heat_group(); this will check rewrite rule a determine group
+			echo $this->get_clickheat_script($sitenum, "(document.title == '' ? '-none-' : encodeURIComponent(document.title))");
+		}
+	}
+
+	/**
+	 * Outputs the piwik tracking javascript for the given parameters
+	 * @param string $ssl_siteurl The site's SSL URL.
+	 * @param string $siteurl The Site's URL.
+	 * @param string $sitenum The site's ID Number.
+	 * @param string $title The page title.
+	 * @param string $tags A list of tags to track.
+	 */
+	private function get_piwik_script( $ssl_siteurl, $siteurl, $sitenum, $title, $tags )
+	{
+		return <<<PUPPIES
 <!-- Piwik -->
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "${ssl_siteurl}" : "{$siteurl}");
@@ -306,5 +330,31 @@ catch( err ) {
 PUPPIES;
 	}
 
+	/**
+	 * Outputs the clickheat tracking javascript for the given parameters
+	 * @param string $sitenum The site's ID Number.
+	 * @param string $group The group to track clicks for. (it uses page title right now)
+	 * @param int $click_quota Maximum clicks per page and visitor, next clicks won't be saved (0 = no limit)
+	 */
+	private function get_clickheat_script( $sitenum, $group, $click_quota = 3 )
+	{
+		return <<<PONIES
+<!-- Piwik ClickHeat -->
+<script type="text/javascript">
+document.write(unescape("%3Cscript src='" + pkBaseURL + "plugins/ClickHeat/libs/js/clickheat.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+clickHeatSite = {$sitenum};
+clickHeatGroup = {$group};
+clickHeatQuota = {$click_quota};
+clickHeatServer = pkBaseURL + 'plugins/ClickHeat/libs/click.php';
+initClickHeat();
+}
+catch( err ) {
+}
+</script>
+<!-- End Piwik ClickHeat -->
+PONIES;
+	}
 }
 ?>
