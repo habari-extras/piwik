@@ -26,5 +26,6 @@ The configuration options are:
       optionally be ignored.
     - Piwik Auth Token: The auth token of your piwik install. Found in the
       "API" screen, link at the top.
-    - Include PiWik Click Heat Plugin JS: If you have the Click Heat plugin installed on your Piwik instance,
-      you can include the Javascript needed by clicking this checkbox.
+    - Include PiWik Click Heat Plugin JS: If you have the Click Heat plugin
+      installed on your Piwik instance, you can include the Javascript
+      needed by clicking this checkbox.
