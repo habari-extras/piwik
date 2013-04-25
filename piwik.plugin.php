@@ -242,7 +242,11 @@ class Piwik extends Plugin
 
 		$url = '%sindex.php?module=API&idSite=%s&token_auth=%s&width=420&height=200&method=%s&apiModule=%s&apiAction=%s&graphType=%s&period=%s&date=%s%s';
 
-		return sprintf($url, $siteurl, $sitenum, $auth_token, $method, $api_module, $api_action, $graph_type, $period, $date, $query);
+		$api_url = sprintf($url, $siteurl, $sitenum, $auth_token, $method, $api_module, $api_action, $graph_type, $period, $date, $query);
+		if ( !Cache::has('piwik_graphs_' . $api_url) ) {
+			Cache::set('piwik_graphs_' . $api_url, base64_encode(RemoteRequest::get_contents($api_url)));
+		}
+		return Cache::get('piwik_graphs_' . $api_url);
 	}
 
 	/**
