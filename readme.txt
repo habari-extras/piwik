@@ -4,7 +4,7 @@ Piwik is self-hosted software. You need to install and configure Piwik
 separately. Piwik needs PHP and a MySQL database to store data on
 site visits.
 
-For more details, see 
+For more details, see
 
     http://piwik.org/
 
@@ -24,3 +24,8 @@ The configuration options are:
       under the 'Site' tab in the 'ID' field.
     - Tracked logged-in users: Visits by logged in users can
       optionally be ignored.
+    - Piwik Auth Token: The auth token of your piwik install. Found in the
+      "API" screen, link at the top.
+    - Include PiWik Click Heat Plugin JS: If you have the Click Heat plugin
+      installed on your Piwik instance, you can include the Javascript
+      needed by clicking this checkbox.
