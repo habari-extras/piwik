@@ -246,10 +246,24 @@ class Piwik extends Plugin
 		$url = '%sindex.php?module=API&idSite=%s&token_auth=%s&width=420&height=200&method=%s&apiModule=%s&apiAction=%s&graphType=%s&period=%s&date=%s%s';
 
 		$api_url = sprintf($url, $siteurl, $sitenum, $auth_token, $method, $api_module, $api_action, $graph_type, $period, $date, $query);
+		return URL::get( 'auth_ajax', array( 'context' => 'piwik_graph', 'id' => urlencode($api_url) ) );
+	}
+
+	/**
+	 * Outputs cached blocvk image.
+	 *
+	 * @param AjaxHandler $handler The AjaxHandler hadling the request.
+	 */
+	public function action_auth_ajax_piwik_graph( AjaxHandler $handler )
+	{
+		$api_url = urldecode( $handler->handler_vars->raw('id') );
 		if ( !Cache::has('piwik_graphs_' . $api_url) ) {
-			Cache::set('piwik_graphs_' . $api_url, base64_encode(RemoteRequest::get_contents($api_url)));
+			// Cache until midnight.
+			Cache::set( 'piwik_graphs_' . $api_url, base64_encode(RemoteRequest::get_contents($api_url)) );
 		}
-		return Cache::get('piwik_graphs_' . $api_url);
+		// Serve the cached image.
+		header( 'content-type: image/png' );
+		echo base64_decode( Cache::get('piwik_graphs_' . $api_url) );
 	}
 
 	/**
