@@ -257,12 +257,14 @@ class Piwik extends Plugin
 	public function action_auth_ajax_piwik_graph( AjaxHandler $handler )
 	{
 		$api_url = urldecode( $handler->handler_vars->raw('id') );
+		$expires = HabariDateTime::date_create('midnight + 1 day')->int - time();
 		if ( !Cache::has('piwik_graphs_' . $api_url) ) {
 			// Cache until midnight.
-			Cache::set( 'piwik_graphs_' . $api_url, base64_encode(RemoteRequest::get_contents($api_url)) );
+			Cache::set( 'piwik_graphs_' . $api_url, base64_encode(RemoteRequest::get_contents($api_url)), $expires );
 		}
 		// Serve the cached image.
 		header( 'content-type: image/png' );
+		header( 'Expires: ' . gmdate("D, d M Y H:i:s", time() + $expires) . ' GMT' );
 		echo base64_decode( Cache::get('piwik_graphs_' . $api_url) );
 	}
 
